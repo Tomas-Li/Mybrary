@@ -6,11 +6,11 @@ const Author = require('../models/author');
 router.get('/', async (req, res) => {
     let searchOptions = {};
     if (req.query.name != null && req.query.name != '') {
+        console.log(req.query.name);
         searchOptions.name = new RegExp(req.query.name, 'i');
     }//it's a req.query because the form used a GET method (param inside url)!
     try {
         const authors = await Author.find(searchOptions);
-        console.log(authors);
         res.render("authors/index", { 
             authors: authors,
             searchOptions: req.query

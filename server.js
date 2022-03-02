@@ -17,6 +17,7 @@ db.once('open', () => console.log('Connection to MongoDB Succesful'));
 // Routing
 const indexRouter = require('./routes/index');
 const authorRouter = require('./routes/authors');
+const booksRouter = require('./routes/books');
 
 // Initializing express
 const app = express();
@@ -31,5 +32,6 @@ app.use(express.urlencoded( { extended: false , limit: '10mb'} ));
 
 app.use('/', indexRouter);
 app.use('/authors', authorRouter);
+app.use('/books', booksRouter);
 
 app.listen(process.env.PORT || 3000); //For dev is 3000, when it's a real depolyment is an env variable
