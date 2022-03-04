@@ -6,6 +6,7 @@ if (process.env.NODE_ENV !== 'production') {
 // Imports
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts')
+const methodOverride = require('method-override');
 
 // Mongoose connection
 const mongoose = require('mongoose');
@@ -29,6 +30,7 @@ app.set('layout', 'layouts/layout'); //folder layout, file layout
 app.use(expressLayouts);
 app.use(express.static('public')); //We are telling the folder where our static files will be!
 app.use(express.urlencoded( { extended: false , limit: '10mb'} ));
+app.use(methodOverride('_method')); //Parameter that the forms will use!
 
 app.use('/', indexRouter);
 app.use('/authors', authorRouter);
