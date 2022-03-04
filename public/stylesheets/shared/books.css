@@ -1,5 +1,5 @@
 :root {
-    --book-cover-width: 200px;
+    --book-cover-width: 245px;
     --book-cover-width-large: 325px;
     --book-cover-aspect-ratio: 0.75;
 }
@@ -39,8 +39,9 @@
     display: grid;
     align-content: flex-start;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
     grid-template-columns: auto auto;
+    margin-left: 1rem;
 }
 
 .book-details-btn-grid {
