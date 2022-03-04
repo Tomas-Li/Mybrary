@@ -34,4 +34,6 @@ app.use('/', indexRouter);
 app.use('/authors', authorRouter);
 app.use('/books', booksRouter);
 
-app.listen(process.env.PORT || 3000); //For dev is 3000, when it's a real depolyment is an env variable
+app.listen(process.env.PORT || 3000, () =>{
+    console.log("Listening on port 3000")
+}); //For dev is 3000, when it's a real depolyment is an env variable
