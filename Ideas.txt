@@ -1,0 +1,5 @@
+-Arreglar book.js -> Si no se agrega una cover el codigo explota en JSON.parse
+
+-Ratings for books
+-Delete all the books asociated with an author (and the author)
+-Author information
