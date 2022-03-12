@@ -31,7 +31,6 @@ router.get('/', async (req, res) => {
     }
     if (req.query.publishedBefore != null && req.query.publishedBefore != '') {
         query = query.lte('publishDate', req.query.publishedBefore)
-        console.log(req.query.publishedBefore)
         //if publishDate < publishedBefore => add to the query
     }
     if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
@@ -200,7 +199,6 @@ async function renderFormPage(res, book, form, hasError = false){
 
 function saveCover(book, coverEncoded) {
     if (coverEncoded == null || coverEncoded == '') return;
-    console.log(coverEncoded);
     const cover = JSON.parse(coverEncoded);
     if (cover != null && imageMimeTypes.includes(cover.type)){
         book.coverImage = new Buffer.from(cover.data, 'base64');

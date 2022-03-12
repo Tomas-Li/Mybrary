@@ -8,3 +8,25 @@
 .author-name {
     font-size: 1.5rem;
 }
+
+#author-pop-up {
+    background-color: var(--color-background-dark);
+    width: auto;
+    height: 8rem;
+    border-radius: 1rem;
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+    display: none;
+}
+
+.delete-confirmation {
+    margin: 1rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}

@@ -1,10 +1,26 @@
 <h2 class="page-header"><%= author.name %></h2>
 <div class="btn-row">
     <a class="btn btn-primary" href="/authors/<%= author.id %>/edit">Edit</a>
-    <%- include('../partials/deleteFrom', { url: `/authors/${author.id}` }) %>
+    <% if(hasBooks) { %>
+        <a class="btn btn-danger" href="#" onclick="popUp()">Delete</a>
+    <% } else { %>
+        <%- include('../partials/deleteFormAuthor', { url: `/authors/${author.id}`, perm: 'T' }) %>
+    <% } %>
 </div>
 
 <% if (bookByAuthor.length > 0) { %>
     <h2 class="page-header">Book by Author</h2>
     <%- include('../partials/bookGrid', { books: bookByAuthor }) %>
 <% } %>
+
+
+<div id="author-pop-up">
+    <p>Seems like there are books asociated with this author, if you delete the author the books will be deleted, do you want to do this?</p>
+    <div class="delete-confirmation">
+        <%- include('../partials/deleteFormAuthor', { url: `/authors/${author.id}`, perm: 'T' }) %>
+        <a href="#" class="btn btn-primary" onclick="closePopUp()">Keep</a>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="/javascripts/popUp.js"></script>

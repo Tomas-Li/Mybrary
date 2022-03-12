@@ -1,5 +1,48 @@
--Arreglar book.js -> Si no se agrega una cover el codigo explota en JSON.parse
+LISTO   -Delete all the books asociated with an author (and the author)
+            If someone tries to delete an author then a pop up opens saying "The are books asociated with this author, if you delete the author the books will be deleted, do you want to do this?" + button yes and no
+                -.JS file that allows me to modify the DOM will be only accesible through static calling. I have to call the file from the html that has the code (index.ejs -> authorPopUp.ejs -> popUp.js)
+                    -Debo agregar un *event listener* en popUp.js, tal que si al tocarse el boton delete se da la señal de que el autor tiene libros asociados se deba levantar:
+                        *Un pop up (debo responder a ese boton y a una variable en el main code...)
+                        *Una pagina nueva que advierta de que el autor tiene libros y que si se desea borrarlo los libros tambien van a borrarse
+                            Puede que tenga que poner algo intermedio previo al <form> para que pueda usar el event listener!
 
--Ratings for books
--Delete all the books asociated with an author (and the author)
 -Author information
+    Copiar el sistema de los libros para agregar info durante el registro (Año de nacimiento; numero de libros escritos; nacionalidad)
+        -Si algo no se agrega que no se muestre en la pagina de show (<%= if(...) %>)
+    -Mostrar el total de libros asociados con el author!
+        -Tendria que haber una forma de mostrar todos los libros (Un pop-up que imprima todos los nombres?)
+
+-Precio libros
+
+-Sistema de login(log, logut, registry)->Mismo historial para todos pero solo pueden ser modificados por cuentas oficiales:
+    Model:
+        -Username
+        -Password
+        -Email (We want an email when someone logs in)
+        -Status
+    Estados:
+        -Owner (Puede modificar todo y agregar gerentes/empleados)
+        Debe poder ver los botones de add (AGREGAR NUEVA VARIABLE DE ESTADO Y SI NO ES CORRECTA EL EJS NO LO MUESTRA <%= IF (...) %>)
+        -Gerente (Puede modificar todo y agregar empleados)
+        -Empleado (no puede modificar precio ni agregar a nadie)
+            Debe poder ver los botones de add
+        -Random
+
+-Sistema de autenticacion (Mail de verificacion de compra (codigo), aviso de compra) -> Pensar mas sobre esto
+
+-Mejorar el front (iconos, mejores colores [quizas variables en tiempo])
+    musica clasica autoplay
+
+No importante:
+-Copyright al final de la pagina
+-Gerente no puede borrar cuenta pero puede bloquearla
+-About
+-Una pagina contact
+-Agregar el estado de -Cliente (historial de visitias, puede que no lo haga)
+    -Ratting system
+    -Comentarios sobre libros? Se deberian guardar en la base de datos usuarios que comenta y el comentario (quizas fecha), los gerentes y owner deben poder borrarlos
+    -Descuento para usuarios registrados? (-10%)
+
+
+Arreglar:
+-If I don't give enough time to the cover to be loaded the server will crash...

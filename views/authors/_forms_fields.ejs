@@ -1,6 +1,28 @@
 <div class="form-row">
     <div class="form-item">
         <label>Name</label>
-        <input type="text" name="name" value="<%= author.name %>"> 
+        <input required type="text" name="name" value="<%= author.name %>">
+    </div>
+    <div class="form-item">
+        <label>Number Of Books:</label>
+        <input type="number" min="0" max="999" name="nbooks" value="<%= author.nbooks %>">
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-item">
+        <label>Born</label>
+        <input type="number" min="0" max="2030" name="born" value="<%= author.born %>">
+    </div>
+    <div class="form-item">
+        <label>Died</label>
+        <input type="number" min="0" max="2030" name="died" value="<%= author.died %>">
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-item">
+        <label>Information</label>
+        <textarea name="information"><%= author.information %></textarea>
     </div>
 </div>
