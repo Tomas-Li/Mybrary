@@ -19,11 +19,14 @@
 
 <div class="form-row">
     <div class="form-item">
+        <label>Price</label>
+        <input required type="number" name="price" min="0" value="<%= book.price %>"> 
+    </div>
+    <div class="form-item">
             <label>Publish Date</label>
             <input required type="date" name="publishDate" 
                 value="<%= book.publishDate == null ? '' : book.publishDate.toISOString().split('T')[0] %>"> 
     </div>
-    
     <div class="form-item">
         <label>Page Count</label>
         <input required type="number" name="pageCount" min="1" value="<%= book.pageCount %>"> 

@@ -3,24 +3,7 @@ const { redirect } = require('express/lib/response');
 const router = express.Router();
 const Author = require('../models/author');
 const Book = require('../models/book');
-
-//This is for recovering the name of the image from an upload!
-
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']; //images types
-
-// We aren't using multor since we will upload our files to the db
-// const path = require('path');
-// const uploadPath = path.join('public', Book.coverImageBasePath); 
-// const multer = require('multer');
-// const upload = multer({
-//     dest: uploadPath,
-//     fileFilter: (req, file, callback) => {
-//         callback(null, imageMimeTypes.includes(file.mimetype));
-//     }
-// })
-
-//This is for avoiding upload of images from entries that didn't make it to the db:
-//const fs = require('fs'); //File System library!
 
 // All Books Routes
 router.get('/', async (req, res) => {
@@ -55,15 +38,13 @@ router.get('/new', async (req, res) => {
 
 // Create Book Route
 router.post('/', async (req, res) => {
-    //No longer used
-    //const filename = req.file != null ? req.file.filename : null;
     const book = new Book({
         title: req.body.title,
+        price: req.body.price,
         author: req.body.author,
         publishDate: new Date(req.body.publishDate),
         pageCount: req.body.pageCount,
         description: req.body.description,
-        //coverImageName: filename //removed as the image itself will be saved
     })
     saveCover(book, req.body.cover); //function to save the image and its type
 
@@ -71,12 +52,6 @@ router.post('/', async (req, res) => {
         const newBook = await book.save();
         res.redirect(`books/${newBook.id}`);
     } catch {
-        //This is no longer needed as we are keeping the cover in our db
-        //If there is an error we want to delete the upload of the image
-        // if(book.coverImageName != null) {
-        //     removeBookCover(book.coverImageName);
-        // }
-        //If there is an error we want to reload the "newBook" page with the values 
         renderNewPage(res, book, true);
     }
 })
@@ -107,6 +82,7 @@ router.put('/:id', async (req, res) => {
     try{
         book = await Book.findById(req.params.id);
         book.title = req.body.title;
+        book.price = req.body.price;
         book.author = req.body.author;
         book.publishDate = new Date(req.body.publishDate);
         book.pageCount = req.body.pageCount;
@@ -144,23 +120,7 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-//Function for creating a new entry (from 0 or with values after a fail!)
-    //Arguments:
-        //res -> we need to render
-        //book -> we may render a new book or an existing book
-        //hasError -> if there is an error we need to know
-// async function renderNewPage(res, book, hasError = false){
-//     try{
-//         const authors = await Author.find({});
-//         const params = { 
-//             book: book, 
-//             authors: authors };
-//         if (hasError) params.errorMessage = 'Error Creating Book';
-//         res.render('books/new', params);
-//     } catch {
-//         res.redirect('/books');
-//     }
-// }
+
 async function renderNewPage(res, book, hasError = false){
     renderFormPage(res, book, 'new', hasError);
 }
@@ -190,12 +150,6 @@ async function renderFormPage(res, book, form, hasError = false){
     }
 }
 
-//Not needed as we are keeping the cover itself in our server
-// function removeBookCover(fileName) {
-//     fs.unlink(path.join(uploadPath, fileName), err => {
-//         if (err) console.error(err);
-//     });
-// }
 
 function saveCover(book, coverEncoded) {
     if (coverEncoded == null || coverEncoded == '') return;

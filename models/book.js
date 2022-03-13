@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-//const path = require('path');
-//const coverImageBasePath = 'uploads/bookCovers';
-
 const bookSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
+    },
+    price: {
+        type: Number,
     },
     description: {
         type: String,
@@ -39,15 +39,6 @@ const bookSchema = new mongoose.Schema({
     }
 })
 
-//This was replaced as the actual cover is being saved in the DB
-// bookSchema.virtual('coverImagePath').get(function() {
-//     if (this.coverImageName != null) {
-//         return path.join('/', coverImageBasePath, this.coverImageName)
-//         // / -> root folder (public)
-//         // coverImageBasePath -> "uploads/bookCovers"
-//         // this.coverImageName -> imageName
-//     }
-// })
 
 bookSchema.virtual('coverImagePath').get(function() {
     if (this.coverImage != null && this.coverImageType != null) {

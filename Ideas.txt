@@ -6,13 +6,16 @@ LISTO   -Delete all the books asociated with an author (and the author)
                         *Una pagina nueva que advierta de que el autor tiene libros y que si se desea borrarlo los libros tambien van a borrarse
                             Puede que tenga que poner algo intermedio previo al <form> para que pueda usar el event listener!
 
--Author information
-    Copiar el sistema de los libros para agregar info durante el registro (Año de nacimiento; numero de libros escritos; nacionalidad)
-        -Si algo no se agrega que no se muestre en la pagina de show (<%= if(...) %>)
-    -Mostrar el total de libros asociados con el author!
-        -Tendria que haber una forma de mostrar todos los libros (Un pop-up que imprima todos los nombres?)
 
--Precio libros
+LISTO   -Author information
+            Copiar el sistema de los libros para agregar info durante el registro (Año de nacimiento; numero de libros escritos; nacionalidad)
+                -Si algo no se agrega que no se muestre en la pagina de show (<%= if(...) %>)
+            -Mostrar el total de libros asociados con el author en el show!
+            -Tendria que haber una forma de mostrar todos los libros (Un pop-up que imprima todos los nombres?)
+
+
+LISTO   -Precio libros
+
 
 -Sistema de login(log, logut, registry)->Mismo historial para todos pero solo pueden ser modificados por cuentas oficiales:
     Model:
@@ -27,11 +30,15 @@ LISTO   -Delete all the books asociated with an author (and the author)
         -Empleado (no puede modificar precio ni agregar a nadie)
             Debe poder ver los botones de add
         -Random
+    -Esconder add authors y add books para los que no tengan la autorizacion adecuada
+
 
 -Sistema de autenticacion (Mail de verificacion de compra (codigo), aviso de compra) -> Pensar mas sobre esto
 
+
 -Mejorar el front (iconos, mejores colores [quizas variables en tiempo])
     musica clasica autoplay
+
 
 No importante:
 -Copyright al final de la pagina
@@ -42,7 +49,7 @@ No importante:
     -Ratting system
     -Comentarios sobre libros? Se deberian guardar en la base de datos usuarios que comenta y el comentario (quizas fecha), los gerentes y owner deben poder borrarlos
     -Descuento para usuarios registrados? (-10%)
-
+-Se puede cambiar el sistema de busqueda de /books/ (Hace un llamado de todas las entries lo cual es malo si tuvieramos miles y miles de libros, pero tampoco es big data...) (Seria mas eficiente solo buscar en base a lo que se pida en search)
 
 Arreglar:
 -If I don't give enough time to the cover to be loaded the server will crash...

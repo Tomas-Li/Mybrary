@@ -28,5 +28,43 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
 
+.author-details-grid {
+    display: grid;
+    align-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    grid-template-columns: 1fr 3fr;
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+}
+
+.author-details-label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    align-self: flex-start;
+}
+
+#authorBookList-cont {
+    background-color: var(--color-background-dark);
+    width: auto;
+    max-height: 10rem;
+    overflow-y: scroll;
+    border-radius: 1rem;
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    text-align: left;
+    padding-left: 5px;
+
+    display: none;
+}
+
+.authorBookList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
 }

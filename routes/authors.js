@@ -29,7 +29,11 @@ router.get('/new', (req, res) => {
 // Create author route
 router.post('/', async (req, res) => {
     const author = new Author({
-        name: req.body.name
+        name: req.body.name,
+        nbooks : req.body.nbooks,
+        born : req.body.born,
+        died : req.body.died,
+        information : req.body.information
     });
     try{
         const newAuthor = await author.save(); 
@@ -47,14 +51,23 @@ router.post('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const author = await Author.findById(req.params.id);
-        const books = await Book.find({ author: author.id }).limit(8).exec();
-        const hasbooks = (books.length > 0) ? true : false; 
+        const showBooks = await Book.find({ author: author.id }).limit(8).exec();
+        const books = await (Book.find({ author: author.id }).exec());
+        const numBooks = books.length;
+        let namebooks = [];
+        for (let book of books){
+            namebooks.push(book.title);
+        }
+        const hasbooks = (numBooks) ? true : false; 
         res.render('authors/show', {
             author: author,
-            bookByAuthor: books,
-            hasBooks: hasbooks
+            hasBooks: hasbooks,
+            bookByAuthor: showBooks,
+            numBooks: numBooks,
+            namebooks: namebooks
         })
-    } catch {
+    } catch (e){
+        console.log(e);
         res.redirect('/')
     }
 })
@@ -73,7 +86,11 @@ router.put('/:id', async (req, res) => {
     try{
         author = await Author.findById(req.params.id);
         author.name = req.body.name;
-        await author.save(); //I'm overwriting the entry!
+        author.nbooks = req.body.nbooks;
+        author.born = req.body.born;
+        author.died = req.body.died;
+        author.information = req.body.information;
+        await author.save(); //I'm overwriting the entry with this!
         res.redirect(`/authors/${author.id}`);
         // if gucchi then redirect to the updated entry's page
     } catch {
