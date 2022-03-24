@@ -4,6 +4,7 @@ const router = express.Router();
 const Author = require('../models/author');
 const Book = require('../models/book');
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']; //images types
+const {isAuthenticated, notAuthenticated} = require('../passport/authenticated');
 
 // All Books Routes
 router.get('/', async (req, res) => {
@@ -23,6 +24,7 @@ router.get('/', async (req, res) => {
     try{
         const books = await query.exec();
         res.render('books/index', {
+            user: req.user,
             books: books,
             searchOptions: req.query
         });
@@ -32,12 +34,12 @@ router.get('/', async (req, res) => {
 })
 
 // New Books Routes (form for creation)
-router.get('/new', async (req, res) => {
-    renderNewPage(res, new Book()); //There is no third argument as here it can't have an error!
+router.get('/new', isAuthenticated, async (req, res) => {
+    renderNewPage(req, res, new Book()); //There is no third argument as here it can't have an error!
 })
 
 // Create Book Route
-router.post('/', async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
     const book = new Book({
         title: req.body.title,
         price: req.body.price,
@@ -52,7 +54,7 @@ router.post('/', async (req, res) => {
         const newBook = await book.save();
         res.redirect(`books/${newBook.id}`);
     } catch {
-        renderNewPage(res, book, true);
+        renderNewPage(req, res, book, true);
     }
 })
 
@@ -60,24 +62,27 @@ router.post('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try{
         const book = await Book.findById(req.params.id).populate('author').exec();
-        res.render('books/show', { book: book});
+        res.render('books/show', {
+            user: req.user,
+            book: book
+        });
     } catch {
         res.redirect('/');
     }
 })
 
 //Edit Book Route
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', isAuthenticated, async (req, res) => {
     try{
         const book = await Book.findById(req.params.id);
-        renderEditPage(res, book)
+        renderEditPage(req, res, book)
     } catch {
         res.redirect('/');
     }
 })
 
 // Update Book Route
-router.put('/:id', async (req, res) => {
+router.put('/:id', isAuthenticated, async (req, res) => {
     let book
     try{
         book = await Book.findById(req.params.id);
@@ -94,7 +99,7 @@ router.put('/:id', async (req, res) => {
         res.redirect(`/books/${book.id}`);
     } catch {
         if (book != null) { //we got the book but run into a problem reading the page
-            renderEditPage(res, book, true);
+            renderEditPage(req, res, book, true);
         } else {
             redirect('/');
         }
@@ -102,7 +107,7 @@ router.put('/:id', async (req, res) => {
 })
 
 // Delete Book Route
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', isAuthenticated, async (req, res) => {
     let book
     try{
         book = await Book.findById(req.params.id);
@@ -111,8 +116,9 @@ router.delete('/:id', async (req, res) => {
     } catch {
         if (book != null) { //we got the book but run into when deleting
             res.render('books/show', {
+                user: req.user,
                 book: book,
-                errorMessage: 'Couldnt remove book'
+                errorMessage: 'Couldn\'t remove book'
             })
         } else {
             redirect('/');
@@ -121,20 +127,21 @@ router.delete('/:id', async (req, res) => {
 })
 
 
-async function renderNewPage(res, book, hasError = false){
-    renderFormPage(res, book, 'new', hasError);
+async function renderNewPage(req, res, book, hasError = false){
+    renderFormPage(req, res, book, 'new', hasError);
 }
 
 
-async function renderEditPage(res, book, hasError = false){
-    renderFormPage(res, book, 'edit', hasError);
+async function renderEditPage(req, res, book, hasError = false){
+    renderFormPage(req, res, book, 'edit', hasError);
 }
 
 //This allows us to use the function for creating entries for editing entries!
-async function renderFormPage(res, book, form, hasError = false){
+async function renderFormPage(req, res, book, form, hasError = false){
     try{
         const authors = await Author.find({});
         const params = { 
+            user: req.user,
             book: book, 
             authors: authors };
         if (hasError) {

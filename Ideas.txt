@@ -17,9 +17,8 @@ LISTO   -Author information
 LISTO   -Precio libros
 
 
--Sistema de login(log, logut, registry)->Mismo historial para todos pero solo pueden ser modificados por cuentas oficiales:
-    Model:
-        -Username
+-Sistema de login(log, logut, registry)
+    Model: (LISTO)
         -Password
         -Email (We want an email when someone logs in)
         -Status
@@ -27,14 +26,24 @@ LISTO   -Precio libros
         -Owner (Puede modificar todo y agregar gerentes/empleados)
         Debe poder ver los botones de add (AGREGAR NUEVA VARIABLE DE ESTADO Y SI NO ES CORRECTA EL EJS NO LO MUESTRA <%= IF (...) %>)
         -Gerente (Puede modificar todo y agregar empleados)
-        -Empleado (no puede modificar precio ni agregar a nadie)
+        -Empleado
             Debe poder ver los botones de add
-        -Random
-    -Esconder add authors y add books para los que no tengan la autorizacion adecuada
+    -Esconder add authors y add books para los que no tengan la autorizacion adecuada (LISTO)
+    -Se agrega el boton add NewUser para Owner y Gerente
+    -LogOut option
+    -Sistema de recuperacion de password through email (o para cambiar al contraseña)
+
+    -Quizas hacer una pagina de perfiles que permita cambiar mail y contraseña (Ver esto con el siguiente punto en la lista), y que aca haya una opcion de historial para cuentas normales y las opciones de add author, add book, add newUser (las saco de la barra de navegacion)
+    -Owner deberia ser capaz de ver todos los usuarios desde alguna pagina y eliminarlos/cambiar sus status (Manager igual con los empleados!)
+
+-Sistema de autenticacion al crear usuario y cambiar contraseña
+    -Permitir cambiar contraseña o mail cuando se esta con la sesion iniciada (debe involucrar mails de verificacion)
 
 
--Sistema de autenticacion (Mail de verificacion de compra (codigo), aviso de compra) -> Pensar mas sobre esto
-
+-Carrito de compra:
+    -Categoria Usuario
+    -Guardar lista en el carrito
+    -Sumar valores
 
 -Mejorar el front (iconos, mejores colores [quizas variables en tiempo])
     musica clasica autoplay

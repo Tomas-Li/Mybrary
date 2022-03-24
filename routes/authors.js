@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Author = require('../models/author');
 const Book = require('../models/book');
+const {isAuthenticated, notAuthenticated} = require('../passport/authenticated');
 
 
 // All authors routes
@@ -13,6 +14,7 @@ router.get('/', async (req, res) => {
     try {
         const authors = await Author.find(searchOptions);
         res.render("authors/index", { 
+            user: req.user,
             authors: authors,
             searchOptions: req.query,
         });;
@@ -22,12 +24,15 @@ router.get('/', async (req, res) => {
 })
 
 // New authors routes (form for creation)
-router.get('/new', (req, res) => {
-    res.render('authors/new', { author: new Author() });
+router.get('/new', isAuthenticated, (req, res) => {
+    res.render('authors/new', {
+        user: req.user,
+        author: new Author()
+    });
 })
 
 // Create author route
-router.post('/', async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
     const author = new Author({
         name: req.body.name,
         nbooks : req.body.nbooks,
@@ -42,6 +47,7 @@ router.post('/', async (req, res) => {
         // if gucchi then redirect to the new input's page
     } catch {
         res.render('authors/new', {
+            user: req.user,
             author: author,
             errorMessage: 'Error Creating Author'
         }); //If err then reload the page with the inputs and a error msg
@@ -60,28 +66,31 @@ router.get('/:id', async (req, res) => {
         }
         const hasbooks = (numBooks) ? true : false; 
         res.render('authors/show', {
+            user: req.user,
             author: author,
             hasBooks: hasbooks,
             bookByAuthor: showBooks,
             numBooks: numBooks,
             namebooks: namebooks
         })
-    } catch (e){
-        console.log(e);
+    } catch {
         res.redirect('/')
     }
 })
 
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', isAuthenticated, async (req, res) => {
     try{
         const author = await Author.findById(req.params.id);
-        res.render('authors/edit', { author: author });
+        res.render('authors/edit', {
+            user: req.user,
+            author: author
+        });
     } catch {
         res.redirect('/authors')
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', isAuthenticated, async (req, res) => {
     let author;
     try{
         author = await Author.findById(req.params.id);
@@ -100,6 +109,7 @@ router.put('/:id', async (req, res) => {
             res.redirect('/');
         } else {
         res.render('authors/edit', {
+            user: req.user,
             author: author,
             errorMessage: 'Error Updating Author'
             }); //If err then reload the page with the inputs and a error msg
@@ -108,7 +118,7 @@ router.put('/:id', async (req, res) => {
 })
 
 //perm is a parameter to avoid multi-delete from the authors-index
-router.delete('/:id-:perm', async (req, res) => {
+router.delete('/:id-:perm', isAuthenticated, async (req, res) => {
     let author;
     try{
         //I'm doing the remove testing here so to avoid the validate method
@@ -123,7 +133,7 @@ router.delete('/:id-:perm', async (req, res) => {
                     await book.remove();
                 }
                 await author.remove();
-                res.redirect('/authors')
+                return res.redirect('/authors')
             }
         } else {
             await author.remove();
@@ -131,11 +141,12 @@ router.delete('/:id-:perm', async (req, res) => {
         res.redirect('/authors'); // if gucchi then redirect to the authors-index
     } catch (e) {
         if (author == null) {
-            res.redirect('/');
+            return res.redirect('/');
         } else {
             const searchOptions = {};
             const authors = await Author.find(searchOptions);
             res.render('authors/index.ejs', {
+                user: req.user,
                 authors: authors,
                 searchOptions: req.query,
                 errorMessage: 'The author has books associated with him. If you want to delete him do it from his own page'

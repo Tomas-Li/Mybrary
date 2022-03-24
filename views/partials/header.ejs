@@ -3,10 +3,17 @@
         <a class="header-title" href="/">Mybrary</a>
         <ul>
             <li><a href="/authors">Authors</a></li>
-            <li><a href="/authors/new">Add Authors</a></li>
             <li><a href="/books">Books</a></li>
-            <li><a href="/books/new">Add Books</a></li>
-            <li><a href="/login">Login</a></li>
+            <% if(user){ %>
+                <li><a href="/authors/new">Add Authors</a></li>
+                <li><a href="/books/new">Add Books</a></li>
+                <% if(user.status !== 'Employee') { %> 
+                    <li><a href="/register">RegisterNewUser</a></li>
+                <% } %> 
+                <li><a href="/logout">LogOut</a></li>
+            <% } else { %> 
+                <li><a href="/login">Login</a></li>
+            <% } %> 
         </ul>
     </nav>
 </header>

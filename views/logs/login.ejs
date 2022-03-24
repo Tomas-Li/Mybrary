@@ -1,0 +1,15 @@
+<h2 class="page-header">Log In</h2>
+<form method="POST" action="/login">
+    <%- include('_forms_fields_login.ejs') %>
+    <div class="form-row form-row-end">
+        <button class="btn btn-primary" type="submit">Log in</button>
+    </div>
+</form>
+<a href="/recover">Password forgotten?</a>
+<br>
+<a href="/resend">Resend Verification?</a>
+<br>
+
+<% if (messages.error) { %>
+    <div class="error-message"><%= messages.error %></div>
+<% } %>  
