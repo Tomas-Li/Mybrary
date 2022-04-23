@@ -30,7 +30,7 @@ function sendEmail(mailOptions){
 
         transporter.sendMail(mailData, err => {
             if (err)
-                console.log("There has been an error when sendin the email\n", err);
+                console.log("There has been an error when sending the email\n", err);
         })
     } catch (error) {
         throw error;
@@ -52,7 +52,7 @@ async function sendVerificationEmail(user, req, res){
         sendEmail({to, from, subject, html});
 
     } catch (error) {
-        console.log("I failed sending the message! ")
+        console.log("The message couldn't be sent! ")
     }
 }
 

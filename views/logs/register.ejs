@@ -1,24 +1,6 @@
 <h2 class="page-header">Register</h2> 
 <form method="POST" action="/register">
-    <%- include('_forms_fields_login.ejs') %>
-    <div class="form-row">
-        <div class="form-item">
-            <label>Confirm Password</label>
-            <input type="password" name="confirmPassword">
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-item">
-            <label>First Name</label>
-            <input type="text" name="firstName">
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-item">
-            <label>Last Name</label>
-            <input type="text" name="lastName">
-        </div>
-    </div>
+    <%- include('_forms_fields') %>
     <div class="form-row">
         <div class="form-item">
             <label>Status</label>

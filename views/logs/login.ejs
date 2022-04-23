@@ -1,6 +1,17 @@
 <h2 class="page-header">Log In</h2>
 <form method="POST" action="/login">
-    <%- include('_forms_fields_login.ejs') %>
+    <div class="form-row">
+        <div class="form-item">
+            <label>Email</label>
+            <input required type="email" name="email" value="<%= email %>" placeholder="Email">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-item">
+            <label>Password</label>
+            <input required type="password" name="password" value="" placeholder="Password">
+        </div>
+    </div>
     <div class="form-row form-row-end">
         <button class="btn btn-primary" type="submit">Log in</button>
     </div>

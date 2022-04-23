@@ -19,6 +19,8 @@ router.get('/register', isAuthenticated, (req, res) => {
     res.render('logs/register.ejs', {
         user: req.user,
         email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName
     })
 });
 

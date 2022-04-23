@@ -1,0 +1,22 @@
+<h2>Hello <%= user.firstName %>!</h2>
+
+<div>
+    <div>
+        <h4>First Name: <%= user.firstName %></h4>
+    </div>
+    <div>
+        <h4>Last Name: <%= user.lastName %></h4>
+    </div>
+    <div>
+        <h4>Email: <%= user.email %></h4>
+    </div>
+    <div>
+        <h4>Bio:</h4> 
+        <p><%= user.bio %></p>
+    </div>
+    <div>
+        <h4>Status: <%= user.status %></h4>
+    </div>
+</div>
+
+<a href="/user/edit/<%= user._id %>">Edit</a>

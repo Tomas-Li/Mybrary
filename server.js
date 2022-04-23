@@ -63,6 +63,7 @@ app.use(passport.session());
 // Routing
 app.use('/', require('./routes/index'));
 app.use('/', require('./routes/log'));
+app.use('/user', require('./routes/user'));
 app.use('/authors', require('./routes/authors'));
 app.use('/books', require('./routes/books'));
 

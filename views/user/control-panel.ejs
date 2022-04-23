@@ -1,0 +1,6 @@
+<% for(element of users_list) { %> 
+    <form action="/user/control-panel/<%=element._id%>?_method=DELETE" method="POST">
+    <%= element.firstName  %>
+
+    </form>
+<% } %> 

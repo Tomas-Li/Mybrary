@@ -17,41 +17,54 @@ LISTO   -Author information
 LISTO   -Precio libros
 
 
--Sistema de login(log, logut, registry)
+-Sistema de login(log, logut, registry) (CASI LISTO)
     Model: (LISTO)
         -Password
         -Email (We want an email when someone logs in)
         -Status
-    Estados:
+    Estados: (LISTO)
         -Owner (Puede modificar todo y agregar gerentes/empleados)
         Debe poder ver los botones de add (AGREGAR NUEVA VARIABLE DE ESTADO Y SI NO ES CORRECTA EL EJS NO LO MUESTRA <%= IF (...) %>)
         -Gerente (Puede modificar todo y agregar empleados)
         -Empleado
             Debe poder ver los botones de add
     -Esconder add authors y add books para los que no tengan la autorizacion adecuada (LISTO)
-    -Se agrega el boton add NewUser para Owner y Gerente
-    -LogOut option
-    -Sistema de recuperacion de password through email (o para cambiar al contraseña)
+    -Se agrega el boton add NewUser para Owner y Gerente (LISTO)
+    -LogOut option (LISTO)
+    -Sistema de recuperacion de password through email (o para cambiar al contraseña) (LISTO)
 
-    -Quizas hacer una pagina de perfiles que permita cambiar mail y contraseña (Ver esto con el siguiente punto en la lista), y que aca haya una opcion de historial para cuentas normales y las opciones de add author, add book, add newUser (las saco de la barra de navegacion)
-    -Owner deberia ser capaz de ver todos los usuarios desde alguna pagina y eliminarlos/cambiar sus status (Manager igual con los empleados!)
+    -Quizas hacer una pagina de perfiles que permita cambiar mail y contraseña (Ver esto con el siguiente punto en la lista). (LISTO)
+        Aca haya una opcion de historial para cuentas normales y las opciones de add author, add book, add newUser (las saco de la barra de navegacion) (INCOMPLETO)
+    -Owner deberia ser capaz de ver todos los usuarios desde alguna pagina y eliminarlos/cambiar sus status (Manager igual con los empleados!) (INCOMPLETO)
 
--Sistema de autenticacion al crear usuario y cambiar contraseña
-    -Permitir cambiar contraseña o mail cuando se esta con la sesion iniciada (debe involucrar mails de verificacion)
+    -Sistema de autenticacion al crear usuario y cambiar contraseña. Permitir cambiar contraseña o mail cuando se esta con la sesion iniciada (debe involucrar mails de verificacion) (LISTO)
 
+-Agregar una nueva categoria de estado llamada Visitante
+    -Visitante tiene un listado de libros favoritos
+
+-Borrar author+libros solo debe funcionar si el user.status >= manager
 
 -Carrito de compra:
-    -Categoria Usuario
     -Guardar lista en el carrito
+        -Debe ser un new entry en el User model, el cual expire dado x tiempo (https://www.mongodb.com/community/forums/t/auto-delete-certain-type-of-document-in-mongodb-in-collection/12631/2)
     -Sumar valores
+        -Debo buscar cada item(book) a traves de su id y recuperar el precio desde la DB, luego puedo sumarlos
+    -Si algun elemento no se encuentra durante el show del carrito (AKA cuando tengo que hacer la suma de valores), este debe ser eliminado del atributo de usuario y se debe avisar que un elemento no fue encontrado y se elimino
+    -Implementar Strip para payment
+    -Tras la compra el atributo cart de user debe ser reseteado
 
 -Mejorar el front (iconos, mejores colores [quizas variables en tiempo])
-    musica clasica autoplay
+    -Musica clasica autoplay
+    -Icono de perfil (y que se pueda ver la foto de perfil al entrar en la cuenta, usar cloudinary)
+    -Agregar marcos para las fotos de portada de los libros
+    -Dar un slide que cambie el valor de la variable de background (Dark mode?)
+    -Arreglar el "show books" de authors (sin libros es un asco, e incluso con libros es un asco)
+    -Dar un recuadro a las covers de los libros
 
 
 No importante:
 -Copyright al final de la pagina
--Gerente no puede borrar cuenta pero puede bloquearla
+-Gerente no puede borrar cuenta pero puede bloquearla (? -> quitar verificacion?)
 -About
 -Una pagina contact
 -Agregar el estado de -Cliente (historial de visitias, puede que no lo haga)
@@ -61,4 +74,4 @@ No importante:
 -Se puede cambiar el sistema de busqueda de /books/ (Hace un llamado de todas las entries lo cual es malo si tuvieramos miles y miles de libros, pero tampoco es big data...) (Seria mas eficiente solo buscar en base a lo que se pida en search)
 
 Arreglar:
--If I don't give enough time to the cover to be loaded the server will crash...
+-If I don't give enough time to the cover to be loaded the server will crash... -> tengo que encontrar una forma de verificar la carga de la imagen, lo que es complicado porque esta libreria no presentaba un metodo asi.
