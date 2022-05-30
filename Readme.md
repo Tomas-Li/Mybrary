@@ -1,4 +1,4 @@
-## Mybrary - Full backend bookstore applicatoin!
+## Mybrary - Full backend bookstore application!
 
 Mybrary is a bookstore application that works everything on the backend.
 - Designed in a Node-Express environment
