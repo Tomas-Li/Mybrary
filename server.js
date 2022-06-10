@@ -6,7 +6,7 @@ if (process.env.NODE_ENV !== 'production') {
 const {
     SESS_NAME="sid",
     PORT=3000,
-    SESS_LIFETIME=1000*60*60//1h
+    SESS_LIFETIME=1000*60*60 //1h
 } = process.env
 const IN_PROD = process.env.NODE_ENV === 'production';
 
@@ -52,17 +52,18 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         maxAge: SESS_LIFETIME,
-        sameSite: 'none',
+        sameSite: true,
         secure: IN_PROD
     }
 }));
 app.use(flash());
 app.use(passport.initialize());
-
+app.use(passport.session());
 
 // Routing
 app.use('/', require('./routes/index'));
 app.use('/', require('./routes/log'));
+app.use('/user', require('./routes/user'));
 app.use('/authors', require('./routes/authors'));
 app.use('/books', require('./routes/books'));
 
